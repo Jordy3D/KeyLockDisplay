@@ -34,5 +34,41 @@ namespace KeyLockDisplay.Properties {
                 this["LightMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int RefreshTime {
+            get {
+                return ((int)(this["RefreshTime"]));
+            }
+            set {
+                this["RefreshTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseCustomIcons {
+            get {
+                return ((bool)(this["UseCustomIcons"]));
+            }
+            set {
+                this["UseCustomIcons"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CustomIconPath {
+            get {
+                return ((string)(this["CustomIconPath"]));
+            }
+            set {
+                this["CustomIconPath"] = value;
+            }
+        }
     }
 }

@@ -49,27 +49,27 @@ namespace KeyLockDisplay
             //Create system tray icons
             _lockIcon = new NotifyIcon();
 
-			//Setup lockIcon
-			_lockIcon.MouseClick += new MouseEventHandler(lockIcon_MouseClick);
-			_lockIcon.ContextMenu = contextMenu;
-			_lockIcon.Visible = true;
+            //Setup lockIcon
+            _lockIcon.MouseClick += new MouseEventHandler(lockIcon_MouseClick);
+            _lockIcon.ContextMenu = contextMenu;
+            _lockIcon.Visible = true;
 
-			// run updateLockIcon every n ms
-			_timer = new Timer(UpdateLockIcon, null, 0, 100);
+            // run updateLockIcon every n ms
+            _timer = new Timer(UpdateLockIcon, null, 0, Properties.Settings.Default.RefreshTime);
 
-			//Launch
-			Application.Run();
+            //Launch
+            Application.Run();
 
         }
 
         private static void UpdateLockIcon(object state)
         {
-			Icon lockStateIcon = KeyStateIcon();
-			String lockStateString = KeyStateString();
+            Icon lockStateIcon = KeyStateIcon();
+            String lockStateString = KeyStateString();
 
-			_lockIcon.Icon = lockStateIcon;
-			_lockIcon.Text = lockStateString;
-		}
+            _lockIcon.Icon = lockStateIcon;
+            _lockIcon.Text = lockStateString;
+        }
 
         private static Icon KeyStateIcon()
         {
@@ -86,9 +86,18 @@ namespace KeyLockDisplay
 
             lockString += _isLightMode ? "_W" : "_B";
 
-			// otherwise, return the icon with the appropriate letters, ie return Properties.Resources.Active_CNI if capslock, numlock and insert are on
-
-			return (Icon)Properties.Resources.ResourceManager.GetObject("Active_" + lockString);
+            if (Properties.Settings.Default.UseCustomIcons)
+            {
+                // get icon from folder stored in Properties
+                string path = Properties.Settings.Default.CustomIconPath;
+                string iconPath = $"{path}/Active_{lockString}.ico";
+                return new Icon(iconPath);
+            }
+            else
+            {
+                // otherwise, return the icon with the appropriate letters, ie return Properties.Resources.Active_CNI if capslock, numlock and insert are on
+                return (Icon)Properties.Resources.ResourceManager.GetObject("Active_" + lockString);
+            }
         }
         private static string KeyStateString()
         {
@@ -99,10 +108,10 @@ namespace KeyLockDisplay
 
             if (Control.IsKeyLocked(Keys.CapsLock)) lockString += "CapsLock\n";
             if (Control.IsKeyLocked(Keys.NumLock)) lockString += "NumLock\n";
-			if (Control.IsKeyLocked(Keys.Insert)) lockString += "Insert\n";
-			if (Control.IsKeyLocked(Keys.Scroll)) lockString += "ScrollLock";
+            if (Control.IsKeyLocked(Keys.Insert)) lockString += "Insert\n";
+            if (Control.IsKeyLocked(Keys.Scroll)) lockString += "ScrollLock";
 
-			return lockString;
+            return lockString;
         }
 
         #region Icon Click

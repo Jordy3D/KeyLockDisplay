@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -28,7 +29,12 @@ namespace KeyLockDisplay
             checkBoxAutorun.Checked = (autorun.GetValue("KeyLockDisplay") != null);
             checkBoxLight.Checked = Properties.Settings.Default.LightMode;
 
-            ApplyTheme();
+            checkBoxCustomIcons.Checked = Properties.Settings.Default.UseCustomIcons;
+            textBoxResourcePath.Text = Properties.Settings.Default.CustomIconPath;
+
+            textBoxRefreshRate.Text = Properties.Settings.Default.RefreshTime.ToString();
+
+			ApplyTheme();
         }
 
         void ApplyTheme()
@@ -36,13 +42,15 @@ namespace KeyLockDisplay
             this.BackColor = ColorTranslator.FromHtml(_isLightMode ? "#f0f0f0" : "#1f1f1f");
             this.ForeColor = ColorTranslator.FromHtml(_isLightMode ? "#000" : "#fff");
 
-            foreach (Button but in flowLayoutPanel1.Controls)
+            foreach (Control c in tableLayoutPanel1.Controls)
             {
-                but.BackColor = ColorTranslator.FromHtml(_isLightMode ? "#ffffff" : "#2e2e2e");
-                but.ForeColor = ColorTranslator.FromHtml(_isLightMode ? "#000" : "#fff");
+                if (c is Button)
+                {
+                    c.BackColor = ColorTranslator.FromHtml(_isLightMode ? "#ffffff" : "#2e2e2e");
+                    c.ForeColor = ColorTranslator.FromHtml(_isLightMode ? "#000" : "#fff");
+                }
             }
         }
-
 
         private void SaveSettings()
         {
@@ -53,7 +61,22 @@ namespace KeyLockDisplay
 
             Properties.Settings.Default.LightMode = checkBoxLight.Checked;
 
-            Properties.Settings.Default.Save();
+            if (checkBoxCustomIcons.Checked)
+			{
+                Properties.Settings.Default.UseCustomIcons = true;
+                Properties.Settings.Default.CustomIconPath = textBoxResourcePath.Text;
+			}
+            else
+			{
+				Properties.Settings.Default.UseCustomIcons = false;
+			}
+
+            string refreshText = textBoxRefreshRate.Text;
+            // if refreshText is a number
+            if (Regex.IsMatch(refreshText, @"^\d+$"))
+			    Properties.Settings.Default.RefreshTime = int.Parse(refreshText);
+
+			Properties.Settings.Default.Save();
 
             if (needToRestart)
                 Application.Restart();
@@ -77,7 +100,30 @@ namespace KeyLockDisplay
         private void checkBoxLight_CheckedChanged(object sender, EventArgs e)
         {
             needToRestart = checkBoxLight.Checked != Properties.Settings.Default.LightMode;
-            // restartLabel.Visible = needToRestart;
+            restartLabel.Visible = needToRestart;
         }
-    }
+
+        private void checkBoxCustomIcons_CheckChanged(object sender, EventArgs e)
+        {
+			needToRestart = checkBoxLight.Checked != Properties.Settings.Default.UseCustomIcons;
+			restartLabel.Visible = needToRestart;
+		}
+
+        private void textBoxRefreshRate_TextChanged(object sender, EventArgs e)
+        {
+            needToRestart = textBoxRefreshRate.Text != Properties.Settings.Default.RefreshTime.ToString();
+			restartLabel.Visible = needToRestart;
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+        {
+			DialogResult result = folderBrowserDialog1.ShowDialog();
+
+            if (result == DialogResult.OK && !string.IsNullOrEmpty(folderBrowserDialog1.SelectedPath))
+			{
+				textBoxResourcePath.Text = folderBrowserDialog1.SelectedPath;
+			}
+
+		}
+	}
 }

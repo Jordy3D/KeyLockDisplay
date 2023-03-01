@@ -35,16 +35,22 @@
 			this.restartLabel = new System.Windows.Forms.Label();
 			this.checkBoxLight = new System.Windows.Forms.CheckBox();
 			this.checkBoxAutorun = new System.Windows.Forms.CheckBox();
-			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.checkBoxCustomIcons = new System.Windows.Forms.CheckBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.label2 = new System.Windows.Forms.Label();
+			this.textBoxRefreshRate = new System.Windows.Forms.TextBox();
+			this.textBoxResourcePath = new System.Windows.Forms.TextBox();
 			this.flowLayoutPanel1.SuspendLayout();
-			this.flowLayoutPanel2.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
 			// 
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonCancel.Location = new System.Drawing.Point(167, 3);
+			this.buttonCancel.Location = new System.Drawing.Point(156, 3);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
 			this.buttonCancel.TabIndex = 2;
@@ -55,7 +61,7 @@
 			// buttonOK
 			// 
 			this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonOK.Location = new System.Drawing.Point(86, 3);
+			this.buttonOK.Location = new System.Drawing.Point(75, 3);
 			this.buttonOK.Name = "buttonOK";
 			this.buttonOK.Size = new System.Drawing.Size(75, 23);
 			this.buttonOK.TabIndex = 3;
@@ -69,9 +75,9 @@
 			this.flowLayoutPanel1.Controls.Add(this.buttonOK);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 80);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 219);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(245, 30);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(234, 30);
 			this.flowLayoutPanel1.TabIndex = 4;
 			// 
 			// restartLabel
@@ -80,7 +86,7 @@
 			this.restartLabel.AutoSize = true;
 			this.restartLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.restartLabel.ForeColor = System.Drawing.Color.Red;
-			this.restartLabel.Location = new System.Drawing.Point(9, 61);
+			this.restartLabel.Location = new System.Drawing.Point(9, 200);
 			this.restartLabel.Name = "restartLabel";
 			this.restartLabel.Size = new System.Drawing.Size(205, 13);
 			this.restartLabel.TabIndex = 7;
@@ -89,7 +95,8 @@
 			// checkBoxLight
 			// 
 			this.checkBoxLight.AutoSize = true;
-			this.checkBoxLight.Location = new System.Drawing.Point(6, 31);
+			this.tableLayoutPanel1.SetColumnSpan(this.checkBoxLight, 2);
+			this.checkBoxLight.Location = new System.Drawing.Point(8, 31);
 			this.checkBoxLight.Name = "checkBoxLight";
 			this.checkBoxLight.Size = new System.Drawing.Size(89, 17);
 			this.checkBoxLight.TabIndex = 6;
@@ -100,26 +107,96 @@
 			// checkBoxAutorun
 			// 
 			this.checkBoxAutorun.AutoSize = true;
-			this.checkBoxAutorun.Location = new System.Drawing.Point(6, 8);
+			this.tableLayoutPanel1.SetColumnSpan(this.checkBoxAutorun, 2);
+			this.checkBoxAutorun.Location = new System.Drawing.Point(8, 8);
 			this.checkBoxAutorun.Name = "checkBoxAutorun";
 			this.checkBoxAutorun.Size = new System.Drawing.Size(208, 17);
 			this.checkBoxAutorun.TabIndex = 5;
 			this.checkBoxAutorun.Text = "Start KeyLockDisplay with Windows";
 			this.checkBoxAutorun.UseVisualStyleBackColor = true;
 			// 
-			// flowLayoutPanel2
+			// folderBrowserDialog1
 			// 
-			this.flowLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
-			this.flowLayoutPanel2.Controls.Add(this.checkBoxAutorun);
-			this.flowLayoutPanel2.Controls.Add(this.checkBoxLight);
-			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(13);
-			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(3, 5, 0, 0);
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(245, 57);
-			this.flowLayoutPanel2.TabIndex = 8;
+			this.folderBrowserDialog1.ShowNewFolderButton = false;
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanel1.ColumnCount = 2;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Controls.Add(this.checkBoxLight, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.checkBoxAutorun, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.button1, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.checkBoxCustomIcons, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 4);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxRefreshRate, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxResourcePath, 0, 3);
+			this.tableLayoutPanel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanel1.RowCount = 5;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.42857F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.57143F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 105F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(231, 132);
+			this.tableLayoutPanel1.TabIndex = 9;
+			// 
+			// checkBoxCustomIcons
+			// 
+			this.checkBoxCustomIcons.AutoSize = true;
+			this.checkBoxCustomIcons.Location = new System.Drawing.Point(8, 57);
+			this.checkBoxCustomIcons.Name = "checkBoxCustomIcons";
+			this.checkBoxCustomIcons.Size = new System.Drawing.Size(117, 15);
+			this.checkBoxCustomIcons.TabIndex = 7;
+			this.checkBoxCustomIcons.Text = "Use Custom Icons";
+			this.checkBoxCustomIcons.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(155, 57);
+			this.button1.Name = "button1";
+			this.tableLayoutPanel1.SetRowSpan(this.button1, 2);
+			this.button1.Size = new System.Drawing.Size(67, 37);
+			this.button1.TabIndex = 8;
+			this.button1.Text = "Icon Source";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// label2
+			// 
+			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(8, 105);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(131, 13);
+			this.label2.TabIndex = 10;
+			this.label2.Text = "Time Between Refreshes";
+			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// textBoxRefreshRate
+			// 
+			this.textBoxRefreshRate.Location = new System.Drawing.Point(155, 100);
+			this.textBoxRefreshRate.Name = "textBoxRefreshRate";
+			this.textBoxRefreshRate.Size = new System.Drawing.Size(68, 22);
+			this.textBoxRefreshRate.TabIndex = 11;
+			// 
+			// textBoxResourcePath
+			// 
+			this.textBoxResourcePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxResourcePath.Location = new System.Drawing.Point(8, 78);
+			this.textBoxResourcePath.Name = "textBoxResourcePath";
+			this.textBoxResourcePath.Size = new System.Drawing.Size(141, 22);
+			this.textBoxResourcePath.TabIndex = 12;
 			// 
 			// SettingsForm
 			// 
@@ -128,8 +205,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.CancelButton = this.buttonCancel;
-			this.ClientSize = new System.Drawing.Size(245, 110);
-			this.Controls.Add(this.flowLayoutPanel2);
+			this.ClientSize = new System.Drawing.Size(234, 249);
+			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.restartLabel);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -141,8 +218,8 @@
 			this.Text = "KeyLockDisplay Settings";
 			this.Load += new System.EventHandler(this.SettingsForm_Load);
 			this.flowLayoutPanel1.ResumeLayout(false);
-			this.flowLayoutPanel2.ResumeLayout(false);
-			this.flowLayoutPanel2.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -155,6 +232,12 @@
         private System.Windows.Forms.Label restartLabel;
         private System.Windows.Forms.CheckBox checkBoxLight;
         private System.Windows.Forms.CheckBox checkBoxAutorun;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.CheckBox checkBoxCustomIcons;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.TextBox textBoxRefreshRate;
+		private System.Windows.Forms.TextBox textBoxResourcePath;
 	}
 }
