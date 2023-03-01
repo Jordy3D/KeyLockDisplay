@@ -59,7 +59,6 @@ namespace KeyLockDisplay
 
             //Launch
             Application.Run();
-
         }
 
         private static void UpdateLockIcon(object state)
@@ -74,6 +73,7 @@ namespace KeyLockDisplay
         private static Icon KeyStateIcon()
         {
             string lockString = "";
+
             // if capslock, numlock, scrolllock or insert is on, add a letter to the string
             if (Control.IsKeyLocked(Keys.CapsLock)) lockString += "C";
             if (Control.IsKeyLocked(Keys.NumLock)) lockString += "N";
@@ -84,6 +84,7 @@ namespace KeyLockDisplay
             if (lockString == "")
                 lockString = "None";
 
+            // Add the appropriate suffix for the current theme mode
             lockString += _isLightMode ? "_W" : "_B";
 
             if (Properties.Settings.Default.UseCustomIcons)
@@ -95,7 +96,6 @@ namespace KeyLockDisplay
             }
             else
             {
-                // otherwise, return the icon with the appropriate letters, ie return Properties.Resources.Active_CNI if capslock, numlock and insert are on
                 return (Icon)Properties.Resources.ResourceManager.GetObject("Active_" + lockString);
             }
         }

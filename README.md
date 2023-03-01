@@ -19,6 +19,9 @@ Key Lock Display makes use of 4 dots in a 2x2 grid, one for each key lock:
 
 ## To-Do
 - [x] ~~Support Light Mode users~~
+- [x] ~~Allow for user-provided paths to resources~~
+- [x] ~~Allow user to define custom refresh rate (default 100ms)~~
 - [ ] Implement image-generation as part of main application
-- [ ] Allow for user-provided paths to resources
-- [ ] Allow user to define custom refresh rate (default 100ms)
+
+## Notes
+In some cases, the application may fail to start, likely due to malformed settings. To fix this, delete any KeyLockDisplay settings folders at `C:\Users\YOUR USERNAME\AppData\Local\Bane` and restart the application.

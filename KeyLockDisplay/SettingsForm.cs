@@ -34,7 +34,7 @@ namespace KeyLockDisplay
 
             textBoxRefreshRate.Text = Properties.Settings.Default.RefreshTime.ToString();
 
-			ApplyTheme();
+            ApplyTheme();
         }
 
         void ApplyTheme()
@@ -52,7 +52,7 @@ namespace KeyLockDisplay
             }
         }
 
-        private void SaveSettings()
+        private bool SaveSettings()
         {
             if (checkBoxAutorun.Checked)
                 autorun.SetValue("KeyLockDisplay", Application.ExecutablePath);
@@ -62,27 +62,56 @@ namespace KeyLockDisplay
             Properties.Settings.Default.LightMode = checkBoxLight.Checked;
 
             if (checkBoxCustomIcons.Checked)
-			{
+            {
+                // check if there's an Active_None_B.ico file in the folder
+                if (!File.Exists(textBoxResourcePath.Text + @"\Active_None_B.ico"))
+                {
+                    MessageBox.Show("The folder you selected does not seem to contain valid icon files. \nPlease check your folder again, or sleect a different folder.", "Key Lock Display - Icon Folder Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return false;
+                }
+
                 Properties.Settings.Default.UseCustomIcons = true;
                 Properties.Settings.Default.CustomIconPath = textBoxResourcePath.Text;
-			}
+            }
             else
-			{
-				Properties.Settings.Default.UseCustomIcons = false;
-			}
+            {
+                Properties.Settings.Default.UseCustomIcons = false;
+            }
 
             string refreshText = textBoxRefreshRate.Text;
-            // if refreshText is a number
-            if (Regex.IsMatch(refreshText, @"^\d+$"))
-			    Properties.Settings.Default.RefreshTime = int.Parse(refreshText);
 
-			Properties.Settings.Default.Save();
+            // tryparse refreshText
+            if (int.TryParse(refreshText, out int newRefreshTime) && newRefreshTime > 0)
+            {
+                if (newRefreshTime < 100)
+                    MessageBox.Show("The refresh rate supports values below 100, but it is not recommended as it may cause performance issues.", "Key Lock Display - Refresh Rate Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                Properties.Settings.Default.RefreshTime = newRefreshTime;
+            }
+            else
+            {
+                MessageBox.Show("The refresh rate must be a positive integer.", "Key Lock Display - Refresh Rate Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBoxRefreshRate.Text = Properties.Settings.Default.RefreshTime.ToString();
+                return false;
+            }
+
+            Properties.Settings.Default.Save();
 
             if (needToRestart)
                 Application.Restart();
+
+            return true;
         }
 
         #region Buttons
+
+        private void updateRestartLabel(bool state)
+        {
+            needToRestart = state;
+            restartLabel.Visible = needToRestart;
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
@@ -90,40 +119,35 @@ namespace KeyLockDisplay
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            SaveSettings();
-            Close();
+            if (SaveSettings())
+                Close();
         }
         #endregion
 
-
-
         private void checkBoxLight_CheckedChanged(object sender, EventArgs e)
         {
-            needToRestart = checkBoxLight.Checked != Properties.Settings.Default.LightMode;
-            restartLabel.Visible = needToRestart;
+            updateRestartLabel(checkBoxLight.Checked != Properties.Settings.Default.LightMode);
         }
 
         private void checkBoxCustomIcons_CheckChanged(object sender, EventArgs e)
         {
-			needToRestart = checkBoxLight.Checked != Properties.Settings.Default.UseCustomIcons;
-			restartLabel.Visible = needToRestart;
-		}
+            // updateRestartLabel(checkBoxCustomIcons.Checked != Properties.Settings.Default.UseCustomIcons);
+        }
 
         private void textBoxRefreshRate_TextChanged(object sender, EventArgs e)
         {
-            needToRestart = textBoxRefreshRate.Text != Properties.Settings.Default.RefreshTime.ToString();
-			restartLabel.Visible = needToRestart;
-		}
+            updateRestartLabel(textBoxRefreshRate.Text != Properties.Settings.Default.RefreshTime.ToString());
+        }
 
-		private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-			DialogResult result = folderBrowserDialog1.ShowDialog();
+            DialogResult result = folderBrowserDialog1.ShowDialog();
 
             if (result == DialogResult.OK && !string.IsNullOrEmpty(folderBrowserDialog1.SelectedPath))
-			{
-				textBoxResourcePath.Text = folderBrowserDialog1.SelectedPath;
-			}
+            {
+                textBoxResourcePath.Text = folderBrowserDialog1.SelectedPath;
+            }
 
-		}
-	}
+        }
+    }
 }

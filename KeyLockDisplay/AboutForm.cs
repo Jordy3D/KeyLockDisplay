@@ -35,16 +35,14 @@ namespace KeyLockDisplay
             aboutBox.ForeColor = ColorTranslator.FromHtml(_isLightMode ? "#000" : "#fff");
         }
 
-        Process p = new Process();
-
-        private void aboutBox_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            p = Process.Start(e.LinkText);
-        }
-
-        private void aboutBox_TextChanged(object sender, EventArgs e)
+		private void aboutBox_TextChanged(object sender, EventArgs e)
         {
 
         }
-    }
+
+		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+            Process.Start("https://github.com/Jordy3D/KeyLockDisplay");
+        }
+	}
 }
